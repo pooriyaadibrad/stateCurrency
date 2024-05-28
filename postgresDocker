@@ -1,0 +1,1 @@
+sudo docker run --name psql --rm -e POSTGRES_PASSWORD=112233 -v /home/pooriya/Desktop/arzdb:/var/lib/postgres/data -p5432:5432 postgres
