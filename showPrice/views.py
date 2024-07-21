@@ -1,4 +1,5 @@
 from django.shortcuts import render
+import pandas as pd
 from . import models
 import jdatetime
 # Create your views here.
