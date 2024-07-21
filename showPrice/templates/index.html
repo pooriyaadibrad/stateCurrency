@@ -37,14 +37,17 @@
 				<div class="flex flex-col md:flex-row items-center gap-8 w-full  justify-between  mt-1">
 					<div class="relative w-full flex justify-around items-center ml-16 md:ml-2 ">
 						<div class="relative w-full">
-							<select id="countries"
+							<select name="category" id="countries"
 								class="bg-gray-50 border border-gray-300  text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-4 w-[90%] md:w-[50%] font-bold child:font-bold child:px-2 child:my-1 child-hover:cursor-pointer px-4"
 								dir="rtl">
-								<option selected>دلار</option>
+                                {% for item1 in categories %}
+								<option selected>{{ item1 }}</option>
+                                {% endfor %}
+                                <!--
 								<option value="US">تست</option>
 								<option value="CA">1تست</option>
 								<option value="FR">تست2</option>
-								<option value="DE">تست3</option>
+								<option value="DE">تست3</option>-->
 							</select>
 						</div>
 					</div>
@@ -56,9 +59,10 @@
 				</div>
 			</div>
 			<table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 " dir="rtl ">
-				<thead
+				<thead id="tableB"
 					class="text-xs text-gray-700 uppercase bg-gray-50 child-hover:text-gray-400 child-hover:cursor-pointer child:text-center">
-					<tr class="border-b border-gray-400 child:text-xl child:md:text-2xl ">
+
+                <tr class="border-b border-gray-400 child:text-xl child:md:text-2xl ">
 
 
 						<th scope="col" class="px-8 py-3">
@@ -75,78 +79,26 @@
 					<!--az inja bayad data ha va ghimat haro vared koni va render begiri-->
 					<!--az inja bayad data ha va ghimat haro vared koni va render begiri-->
 					<!--az inja bayad data ha va ghimat haro vared koni va render begiri-->
+                {% for item in currencies %}
 					<tr class="text-sm md:text-xl">
 
 
 						<th scope="col" class="px-6 py-3">
-							42,210
+							{{ item.sell }}
 						</th>
 						<th scope="col" class="px-6 py-3">
-							42,000
+							{{ item.buy }}
 						</th>
 						<th scope="col" class="pr-0 py-3">
-							دلار استرالیا
+							{{ item.name }}
 						</th>
 
 					</tr>
+                {% endfor %}
 					<!-- payan inja bayad data ha va ghimat haro vared koni va render begiri-->
 					<!-- payan inja bayad data ha va ghimat haro vared koni va render begiri-->
 					<!-- payan inja bayad data ha va ghimat haro vared koni va render begiri-->
-					<tr class="text-sm md:text-xl">
 
-
-						<th scope="col" class="px-6 py-3">
-							42,210
-						</th>
-						<th scope="col" class="px-6 py-3">
-							42,000
-						</th>
-						<th scope="col" class="px-2  py-3">
-							دلار کانادا
-						</th>
-
-					</tr>
-					<tr class="text-sm md:text-xl">
-
-
-						<th scope="col" class="px-6 py-3">
-							42,210
-						</th>
-						<th scope="col" class="px-6 py-3">
-							42,000
-						</th>
-						<th scope="col" class="px-2 py-3">
-							دلار امریکا
-						</th>
-
-					</tr>
-					<tr class="text-sm md:text-xl">
-
-						<th scope="col" class="px-6 py-3">
-							42,210
-						</th>
-						<th scope="col" class="px-6 py-3">
-							42,000
-						</th>
-						<th scope="col" class="px-2 py-3">
-							دلار امریکا
-						</th>
-
-					</tr>
-					<tr class="text-sm md:text-xl">
-
-
-						<th scope="col" class="px-6 py-3">
-							42,210
-						</th>
-						<th scope="col" class="px-6 py-3">
-							42,000
-						</th>
-						<th scope="col" class="px-2 py-3">
-							دلار امریکا
-						</th>
-
-					</tr>
 				</thead>
 				<tbody>
 
@@ -178,7 +130,39 @@
 // Update the clock immediately and then every second
 updateClock(); // Initial call to set the time immediately
 setInterval(updateClock, 1000); // Update every 1000 milliseconds (1 second)
+        clock=document.getElementById('clock').value
+        category=document.getElementById('category').value
 
+        $.ajax(
+            {
+            url:'',
+            method:'POST',
+            data:{
+            'clock':clock,
+            'category':category
+            },
+            dataType:'json',
+            success:function (response){
+            table=$('#tableB');
+            table.empty()
+                $.each(response,function (index,item){
+                    table.appendChild(
+                        <tr >
+						<th>
+							${ item.sell}
+						</th>
+						<th >
+							${ item.buy }
+						</th>
+						<th >
+							${ item.name }
+						</th>
+
+					</tr>
+                    )
+                })
+            }
+        })
     </script>
 
 
